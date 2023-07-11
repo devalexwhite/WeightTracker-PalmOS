@@ -3,7 +3,7 @@
 <Project Version="2.53">
   <Name>WeightTracker</Name>
   <Configuration>Release</Configuration>
-  <BuildNumber>68</BuildNumber>
+  <BuildNumber>69</BuildNumber>
   <AutoIncrement>True</AutoIncrement>
   <Conduit/>
   <PackageBuilder>WeightTracker.hbk|Release|0000FF||1033|clsApplication+frmMain+weights+Icon</PackageBuilder>
