@@ -100,7 +100,7 @@
     <Popup>
       <Name>puNav</Name>
       <Index>0</Index>
-      <Layer>3</Layer>
+      <Layer>4</Layer>
       <Tag/>
       <Left>84</Left>
       <Top>1</Top>
@@ -110,7 +110,7 @@
       <Visible>True</Visible>
       <Text xml:space="preserve">popup</Text>
       <Font>Standard</Font>
-      <VisibleItems>3</VisibleItems>
+      <VisibleItems>4</VisibleItems>
       <AnchorLeft>True</AnchorLeft>
       <Sorted>0</Sorted>
       <NavFlags>0</NavFlags>
@@ -382,6 +382,44 @@
       <Caption xml:space="preserve">towards goal weight</Caption>
       <Font>Standard</Font>
     </Label>
+    <List>
+      <Name>lstLog</Name>
+      <Index>0</Index>
+      <Layer>3</Layer>
+      <Tag/>
+      <Left>7</Left>
+      <Top>21</Top>
+      <Width>143</Width>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Font>Standard</Font>
+      <VisibleItems>10</VisibleItems>
+      <Sorted>0</Sorted>
+      <NavFlags>0</NavFlags>
+      <NavOrder/>
+      <Above/>
+      <Below/>
+    </List>
+    <Button>
+      <Name>btnDelete</Name>
+      <Index>0</Index>
+      <Layer>3</Layer>
+      <Tag/>
+      <Left>110</Left>
+      <Top>143</Top>
+      <Width>40</Width>
+      <Height>12</Height>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Text xml:space="preserve">Delete</Text>
+      <Font>Standard</Font>
+      <Frame>1</Frame>
+      <Repeating>False</Repeating>
+      <NavFlags>0</NavFlags>
+      <NavOrder/>
+      <Above/>
+      <Below/>
+    </Button>
   </Layout>
   <Source xml:space="preserve"><![CDATA[Private weightLEDValue As String
 
@@ -400,6 +438,7 @@ Private Sub Form_Load()
 	puNav.AddItem "Record Weight"
 	puNav.AddItem "Graph"
 	puNav.AddItem "Stats"
+	puNav.AddItem "Log"
 	puNav.ListIndex=0
 	ShowLayer(0)
 
@@ -455,8 +494,8 @@ Private Sub mnuAbout_Click()
 End Sub
 
 Private Sub puNav_Change()
+Dim table as new weights
 	If puNav.ListIndex=2 Then
-		Dim table as new weights
 		table.OpenTable hbModeOpenExisting+hbModeReadOnly
 		table.MoveLast
 		Dim dif As Double
@@ -467,6 +506,15 @@ Private Sub puNav_Change()
 		Else
 			lblGoalPercent.Caption=CStr(CInt((CDbl(Prefs.goalWeight)/CDbl(table.Weight))*100)) & "%"
 		End If
+	ElseIf puNav.ListIndex=3 Then
+		lstLog.Clear
+		table.OpenTable hbModeOpenExisting+hbModeReadOnly
+		if table.EOF=False Then
+			Do
+				lstLog.AddItem CStr(table.Weight) & "-" & table.Date
+				table.MoveNext()
+			Loop Until table.EOF=True
+		End If
 	End If
 
 	ShowLayer(puNav.ListIndex)
@@ -476,7 +524,7 @@ Private Sub ShowLayer(ByVal iLayer as Integer)
 	Dim c As Control
 
 	For Each c In Controls()
-		If c.Layer<>3 Then c.Visible=False
+		If c.Layer<>4 Then c.Visible=False
 	Next
 
 	For Each c In Controls(iLayer)
@@ -552,5 +600,16 @@ End Sub
 Private Sub btn12_Click()
 weightLEDValue="0"
 fWeight.Text=weightLEDValue
+End Sub
+
+Private Sub btnDelete_Click()
+	If lstLog.ListIndex >= 0 Then
+		Dim table as new weights
+		table.OpenTable hbModeOpenExisting+hbModeReadWrite
+		table.AbsolutePosition=lstLog.ListIndex
+		table.Delete hbRecordDelete
+		table.Update
+		lstLog.RemoveItem lstLog.ListIndex
+	End If
 End Sub]]></Source>
 </Form>

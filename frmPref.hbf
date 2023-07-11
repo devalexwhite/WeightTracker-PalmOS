@@ -10,7 +10,7 @@
     <Top>2</Top>
     <Width>156</Width>
     <Height>156</Height>
-    <Caption xml:space="preserve">Preferemces</Caption>
+    <Caption xml:space="preserve">Preferences</Caption>
     <Modal>True</Modal>
     <Help/>
     <DIA>0</DIA>
