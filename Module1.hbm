@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Peter Holmes Consulting HB++ Module file -->
+<Module Version="2.53">
+  <Name>Module1</Name>
+  <Segment>main</Segment>
+  <Source xml:space="preserve"><![CDATA[Public Prefs as New clsPrefs]]></Source>
+</Module>

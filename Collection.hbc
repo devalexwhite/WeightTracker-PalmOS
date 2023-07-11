@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Peter Holmes Consulting HB++ Class file -->
+<Class Version="2.53">
+  <Name>Collection</Name>
+  <Segment>main</Segment>
+  <Extends>Object</Extends>
+  <Instantiable>True</Instantiable>
+  <Extendable>True</Extendable>
+  <Cloneable>False</Cloneable>
+  <Source xml:space="preserve"><![CDATA[Private aItems(1 To 16) as Variant
+Private iItemCount as Integer
+
+Public Sub Add(ByRef v as Variant)
+  Dim k as Integer
+
+  k=UBound(aItems)
+  If iItemCount>=k Then ReDim Preserve aItems(1 To k+16)
+
+  iItemCount = iItemCount+1
+  aItems(iItemCount) = v
+End Sub
+
+Public Sub Clear()
+  ReDim aItems(1 To 16)
+  iItemCount = 0
+End Sub
+
+Public Function Item(ByVal i as Integer) as Variant
+  Item = aItems(i)
+End Function]]></Source>
+</Class>

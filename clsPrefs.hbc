@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Peter Holmes Consulting HB++ Class file -->
+<Class Version="2.53">
+  <Name>clsPrefs</Name>
+  <Segment>main</Segment>
+  <Extends>Object</Extends>
+  <Instantiable>True</Instantiable>
+  <Extendable>True</Extendable>
+  <Cloneable>False</Cloneable>
+  <Source xml:space="preserve"><![CDATA[Public goalWeight As Double
+
+Private Sub Object_Serialize(ByRef lCount as Long, ByVal stream As Stream, ByVal eDirection As HbStream, ByVal lSize As Long)
+	If eDirection=hbStreamRead Then
+		stream.Read goalWeight
+	Else
+		stream.Write goalWeight
+	End If
+End Sub
+
+Public Sub SavePrefs()
+	Dim s As New StreamMemory
+	s.Write Me
+	App.Preferences(0)=s
+End Sub
+
+Public Sub LoadPrefs()
+	Dim s As StreamMemory
+
+	Try
+		s=App.Preferences(0)
+		s.Read Me
+	Catch
+		goalWeight = 180
+	End Catch
+End Sub]]></Source>
+</Class>

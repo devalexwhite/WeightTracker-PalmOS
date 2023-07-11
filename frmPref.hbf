@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Peter Holmes Consulting HB++ Form file -->
+<Form Version="2.53">
+  <Name>frmPref</Name>
+  <Segment>main</Segment>
+  <Extends>Form</Extends>
+  <Locked>False</Locked>
+  <Layout Target="PalmOS">
+    <Left>2</Left>
+    <Top>2</Top>
+    <Width>156</Width>
+    <Height>156</Height>
+    <Caption xml:space="preserve">Preferemces</Caption>
+    <Modal>True</Modal>
+    <Help/>
+    <DIA>0</DIA>
+    <SaveBehind>True</SaveBehind>
+    <NavState>0</NavState>
+    <InitialFocus/>
+    <BottomLeft/>
+    <Label>
+      <Name>lblGoalWeight</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>21</Left>
+      <Top>23</Top>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Caption xml:space="preserve">Goal Weight:</Caption>
+      <Font>Bold</Font>
+    </Label>
+    <Field>
+      <Name>fldGoalWeight</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>95</Left>
+      <Top>23</Top>
+      <Width>33</Width>
+      <Height>12</Height>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Font>Standard</Font>
+      <Underline>True</Underline>
+      <SingleLine>True</SingleLine>
+      <Align>0</Align>
+      <Editable>True</Editable>
+      <AutoShift>True</AutoShift>
+      <Numeric>True</Numeric>
+      <MaxChar>3</MaxChar>
+      <Scrollbar/>
+      <NavFlags>0</NavFlags>
+      <NavOrder/>
+      <Above/>
+      <Below/>
+    </Field>
+    <Button>
+      <Name>btnOkay</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>6</Left>
+      <Top>142</Top>
+      <Width>24</Width>
+      <Height>12</Height>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Text xml:space="preserve">OK</Text>
+      <Font>Standard</Font>
+      <Frame>1</Frame>
+      <Repeating>False</Repeating>
+      <NavFlags>0</NavFlags>
+      <NavOrder/>
+      <Above/>
+      <Below/>
+    </Button>
+    <Button>
+      <Name>btnCancel</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>37</Left>
+      <Top>142</Top>
+      <Width>32</Width>
+      <Height>12</Height>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Text xml:space="preserve">Cancel</Text>
+      <Font>Standard</Font>
+      <Frame>1</Frame>
+      <Repeating>False</Repeating>
+      <NavFlags>0</NavFlags>
+      <NavOrder/>
+      <Above/>
+      <Below/>
+    </Button>
+  </Layout>
+  <Source xml:space="preserve"><![CDATA[Private Sub Form_Load()
+	fldGoalWeight.Text=Prefs.goalWeight
+End Sub
+
+
+Private Sub btnCancel_Click()
+	Unload Me
+End Sub
+
+
+Private Sub btnOkay_Click()
+	Prefs.goalWeight = CDbl(fldGoalWeight.Text)
+	Prefs.SavePrefs
+	Unload Me
+End Sub]]></Source>
+</Form>
