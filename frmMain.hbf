@@ -425,15 +425,6 @@
 
 Private Sub Form_Load()
 	' TODO: insert your initialization code here.
-	Dim table as new weights
-	table.OpenTable hbModeOpenExisting+hbModeWrite, "alex_weights"
-	graph.GraphType=Lines
-	graph.ShowXAxis=True
-	graph.DrawFrame=True
-	graph.ShowSelectedValue=True
-	graph.Min=50
-	graph.Max=500
-	graph.AutoScale=True
 
 	puNav.AddItem "Record Weight"
 	puNav.AddItem "Graph"
@@ -446,6 +437,23 @@ Private Sub Form_Load()
 
 
 	fWeight.Text = "0"
+
+	buildGraph()
+End Sub
+
+Private Sub buildGraph()
+	Dim table as new weights
+	table.OpenTable hbModeOpenExisting+hbModeWrite, "alex_weights"
+	graph.Clear
+	graph.GraphType=Lines
+	graph.ShowXAxis=True
+	graph.DrawFrame=True
+	graph.ShowSelectedValue=True
+	graph.Min=50
+	graph.Max=500
+	graph.AutoScale=True
+
+
 
 
 	if table.EOF=False Then
@@ -606,10 +614,17 @@ Private Sub btnDelete_Click()
 	If lstLog.ListIndex >= 0 Then
 		Dim table as new weights
 		table.OpenTable hbModeOpenExisting+hbModeReadWrite
-		table.AbsolutePosition=lstLog.ListIndex
+		Dim I as Integer
+		For I = 0 To (lstLog.ListIndex - 1)
+			table.MoveNext()
+		Next I
+
 		table.Delete hbRecordDelete
 		table.Update
+		table.Close
 		lstLog.RemoveItem lstLog.ListIndex
+
+		buildGraph()
 	End If
 End Sub]]></Source>
 </Form>

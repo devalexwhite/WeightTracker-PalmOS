@@ -3,7 +3,7 @@
 <Project Version="2.53">
   <Name>WeightTracker</Name>
   <Configuration>Release</Configuration>
-  <BuildNumber>83</BuildNumber>
+  <BuildNumber>99</BuildNumber>
   <AutoIncrement>True</AutoIncrement>
   <Conduit/>
   <PackageBuilder>WeightTracker.hbk|Release|0000FF||1033|clsApplication+frmMain+weights+Icon</PackageBuilder>
@@ -89,10 +89,10 @@
     <Image>
       <Density>72</Density>
       <Palette>3</Palette>
-      <Compression>255</Compression>
+      <Compression>0</Compression>
       <TransparencyColor>-1</TransparencyColor>
       <Locale>0</Locale>
-      <Filename>Icon_8bpp_72dpi.bmp</Filename>
+      <Filename>Icon_8bpp_72dpi.png</Filename>
     </Image>
   </ImageFamily>
 </Project>
