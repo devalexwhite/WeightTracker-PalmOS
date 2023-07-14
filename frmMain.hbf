@@ -69,10 +69,10 @@
       <Layer>1</Layer>
       <Tag/>
       <Type>ucChart</Type>
-      <Left>6</Left>
-      <Top>21</Top>
-      <Width>146</Width>
-      <Height>105</Height>
+      <Left>0</Left>
+      <Top>18</Top>
+      <Width>160</Width>
+      <Height>142</Height>
       <Anchors>0</Anchors>
       <Visible>True</Visible>
       <NavFlags>0</NavFlags>
@@ -387,9 +387,9 @@
       <Index>0</Index>
       <Layer>3</Layer>
       <Tag/>
-      <Left>7</Left>
-      <Top>21</Top>
-      <Width>143</Width>
+      <Left>1</Left>
+      <Top>18</Top>
+      <Width>158</Width>
       <Anchors>0</Anchors>
       <Visible>True</Visible>
       <Font>Standard</Font>
