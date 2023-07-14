@@ -95,9 +95,61 @@
       <Above/>
       <Below/>
     </Button>
+    <Graffiti>
+      <Name>Graffiti1</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>144</Left>
+      <Top>144</Top>
+      <Anchors>0</Anchors>
+    </Graffiti>
+    <Label>
+      <Name>lblGoalWeight1</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>21</Left>
+      <Top>46</Top>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Caption xml:space="preserve">Unit:</Caption>
+      <Font>Bold</Font>
+    </Label>
+    <Popup>
+      <Name>popUnit</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>95</Left>
+      <Top>42</Top>
+      <Width>40</Width>
+      <Height>12</Height>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Text xml:space="preserve">popup</Text>
+      <Font>Standard</Font>
+      <VisibleItems>3</VisibleItems>
+      <AnchorLeft>True</AnchorLeft>
+      <Sorted>0</Sorted>
+      <NavFlags>0</NavFlags>
+      <NavOrder/>
+      <Above/>
+      <Below/>
+    </Popup>
   </Layout>
   <Source xml:space="preserve"><![CDATA[Private Sub Form_Load()
 	fldGoalWeight.Text=Prefs.goalWeight
+	popUnit.AddItem "LBS"
+	popUnit.AddItem "KG"
+
+	Dim unitPref As WeightUnit
+	unitPref=Prefs.unit
+	If unitPref=lbs Then
+		popUnit.ListIndex=0
+	Else
+		popUnit.ListIndex=1
+	End If
 End Sub
 
 
@@ -108,6 +160,11 @@ End Sub
 
 Private Sub btnOkay_Click()
 	Prefs.goalWeight = CDbl(fldGoalWeight.Text)
+	If popUnit.ListIndex=0 Then
+		Prefs.unit=lbs
+	Else
+		Prefs.unit=kg
+	End If
 	Prefs.SavePrefs
 	Unload Me
 End Sub]]></Source>

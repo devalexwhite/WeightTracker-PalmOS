@@ -3,5 +3,13 @@
 <Module Version="2.53">
   <Name>Module1</Name>
   <Segment>main</Segment>
-  <Source xml:space="preserve"><![CDATA[Public Prefs as New clsPrefs]]></Source>
+  <Source xml:space="preserve"><![CDATA[Public Prefs as New clsPrefs
+Public Enum WeightUnit
+	lbs = 0
+	kg = 1
+End Enum
+
+Public Function ConvertLbsToKilos(ByVal lbs As Double) As Double
+	ConvertLbsToKilos=lbs*2.204623
+End Function]]></Source>
 </Module>

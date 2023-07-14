@@ -8,12 +8,15 @@
   <Extendable>True</Extendable>
   <Cloneable>False</Cloneable>
   <Source xml:space="preserve"><![CDATA[Public goalWeight As Double
+Public unit as WeightUnit
 
 Private Sub Object_Serialize(ByRef lCount as Long, ByVal stream As Stream, ByVal eDirection As HbStream, ByVal lSize As Long)
 	If eDirection=hbStreamRead Then
 		stream.Read goalWeight
+		stream.Read unit
 	Else
 		stream.Write goalWeight
+		stream.Write unit
 	End If
 End Sub
 
@@ -31,6 +34,7 @@ Public Sub LoadPrefs()
 		s.Read Me
 	Catch
 		goalWeight = 180
+		unit=lbs
 	End Catch
 End Sub]]></Source>
 </Class>

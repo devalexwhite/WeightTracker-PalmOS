@@ -25,7 +25,7 @@
       <Tag/>
       <Left>36</Left>
       <Top>18</Top>
-      <Width>80</Width>
+      <Width>48</Width>
       <Height>18</Height>
       <Anchors>0</Anchors>
       <Visible>True</Visible>
@@ -420,6 +420,36 @@
       <Above/>
       <Below/>
     </Button>
+    <Popup>
+      <Name>unitPopup</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>89</Left>
+      <Top>20</Top>
+      <Width>40</Width>
+      <Height>12</Height>
+      <Anchors>0</Anchors>
+      <Visible>True</Visible>
+      <Text xml:space="preserve">popup</Text>
+      <Font>LargeBold</Font>
+      <VisibleItems>3</VisibleItems>
+      <AnchorLeft>True</AnchorLeft>
+      <Sorted>0</Sorted>
+      <NavFlags>0</NavFlags>
+      <NavOrder/>
+      <Above/>
+      <Below/>
+    </Popup>
+    <Graffiti>
+      <Name>Graffiti1</Name>
+      <Index>0</Index>
+      <Layer>0</Layer>
+      <Tag/>
+      <Left>148</Left>
+      <Top>147</Top>
+      <Anchors>0</Anchors>
+    </Graffiti>
   </Layout>
   <Source xml:space="preserve"><![CDATA[Private weightLEDValue As String
 
@@ -431,14 +461,22 @@ Private Sub Form_Load()
 	puNav.AddItem "Stats"
 	puNav.AddItem "Log"
 	puNav.ListIndex=0
+
+	unitPopup.AddItem "LBS"
+	unitPopup.AddItem "KG"
+
+	If Prefs.unit=lbs Then
+		unitPopup.ListIndex=0
+	Else
+		unitPopup.ListIndex=1
+	End If
+
 	ShowLayer(0)
 
 	weightLEDValue="0"
 
 
 	fWeight.Text = "0"
-
-	buildGraph()
 End Sub
 
 Private Sub buildGraph()
@@ -458,7 +496,13 @@ Private Sub buildGraph()
 
 	if table.EOF=False Then
 		Do
-			graph.AddValue "SERIE1", table.Weight,hbColorBlue,table.Date
+			Dim weight As Double
+			If Prefs.unit=lbs Then
+				weight=table.Weight
+			Else
+				weight=ConvertLbsToKilos(table.Weight)
+			End If
+			graph.AddValue "SERIE1", weight,hbColorBlue,table.Date
 			table.MoveNext()
 		Loop Until table.EOF=True
 	End If
@@ -468,7 +512,10 @@ End Sub
 
 Private Sub rButton_Click()
 	Dim weight As Double
-	weight=fWeight.Text
+	weight=CDbl(fWeight.Text)
+	If unitPopup.ListIndex=1 Then
+		weight=ConvertLbsToKilos(weight)
+	End If
 
 	graph.AddValue "SERIE1",weight,hbColorBlue, CStr(Date)
 
@@ -476,7 +523,7 @@ Private Sub rButton_Click()
 	table.OpenTable hbModeOpenExisting+hbModeWrite
 	table.AddNew
 	table.Date=Date
-	table.Weight=CDbl(weight)
+	table.Weight=weight
 	table.Category=0
 	table.Secret=False
 	table.Update
@@ -503,7 +550,9 @@ End Sub
 
 Private Sub puNav_Change()
 Dim table as new weights
-	If puNav.ListIndex=2 Then
+	If puNav.ListIndex=1 Then
+		buildGraph()
+	ElseIf puNav.ListIndex=2 Then
 		table.OpenTable hbModeOpenExisting+hbModeReadOnly
 		table.MoveLast
 		Dim dif As Double
@@ -519,7 +568,13 @@ Dim table as new weights
 		table.OpenTable hbModeOpenExisting+hbModeReadOnly
 		if table.EOF=False Then
 			Do
-				lstLog.AddItem CStr(table.Weight) & "-" & table.Date
+				Dim weight as Double
+				If Prefs.unit=lbs Then
+					weight=table.Weight
+				Else
+					weight=ConvertLbsToKilos(table.Weight)
+				End If
+				lstLog.AddItem CStr(weight) & "-" & table.Date
 				table.MoveNext()
 			Loop Until table.EOF=True
 		End If
